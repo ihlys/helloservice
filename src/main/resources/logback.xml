@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <variable name="LOG_HOME" value="${user.home}/helloservice/logs" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+	    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	        <level>ERROR</level>
+	    </filter>
+
+        <file>${LOG_HOME}/helloworld.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/helloworld%i.log.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>2MB</MaxFileSize>
+        </triggeringPolicy>
+
+    </appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+   	    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	        <level>DEBUG</level>
+	    </filter>
+	    
+	    <layout class="ch.qos.logback.classic.PatternLayout">
+		<Pattern>
+			%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+		</Pattern>
+	    </layout>
+	</appender>
+	
+	<logger name="com.ihordev.helloservice" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+    <root level="ERROR">
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

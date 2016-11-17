@@ -1,0 +1,5 @@
+<!ELEMENT dataset (Contacts+)>
+<!ELEMENT Contacts (#PCDATA)>
+
+<!ATTLIST Contacts id CDATA #IMPLIED>
+<!ATTLIST Contacts name CDATA #REQUIRED>

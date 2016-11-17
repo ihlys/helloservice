@@ -1,0 +1,12 @@
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact one');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact two');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact three');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact four');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('A Contact five');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Cont_ct s_x');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Cont_ct s_v_n');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact eight');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact nine');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact ten');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact eleven');
+INSERT INTO HELLOSERVICE.Contacts(name) VALUES('Contact twelve');

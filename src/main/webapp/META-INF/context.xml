@@ -1,0 +1,7 @@
+<Context>     
+
+	<ResourceLink 	name="jdbc/H2Database"
+					global="jdbc/H2Database"
+					type="javax.sql.DataSource" />
+
+</Context>
