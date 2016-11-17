@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/ihlys/helloservice.svg?style=svg)](https://circleci.com/gh/ihlys/helloservice)
 
 The application works in Tomcat environment http://tomcat.apache.org/ and uses JNDI lookup for java.sql.DataSource.
-The server must provide initial context with following resource: "jdbc/H2Database".
+The server must provide initial context with following resource name: "jdbc/H2Database".
 
 Example Tomcat configuration in %CATALINA_HOME%\conf\server.xml:
 ```xml
