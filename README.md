@@ -23,3 +23,5 @@ Example Tomcat configuration in %CATALINA_HOME%\conf\server.xml:
       
 DataSource presented by H2 lightweight database: http://www.h2database.com. The class 'org.h2.Driver' which is located in h2.jar library must be presented on Tomcat classpath. 
 To generate example schema and data you can use data population sql scripts generation utility in h2scripts folder.
+
+Application must be launched with argument that specifies Spring active profile: -Dspring.profiles.active=production.
