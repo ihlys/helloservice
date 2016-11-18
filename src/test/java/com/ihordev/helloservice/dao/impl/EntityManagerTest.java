@@ -10,22 +10,21 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.ihordev.helloservice.config.TestRootConfig;
+import com.ihordev.helloservice.config.TestDataConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestRootConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = TestDataConfig.class)
 @TestPropertySource("classpath:properties/test-dbconfig.properties")
 @ActiveProfiles("db-test")
 public class EntityManagerTest
 {
-	@PersistenceContext
-	private EntityManager entityManager;
-	
-	@Test
-	public void shouldProvideEntityManager()
-	{
-		Assert.assertNotNull(entityManager);
-	}
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Test
+    public void shouldProvideEntityManager()
+    {
+        Assert.assertNotNull(entityManager);
+    }
 }

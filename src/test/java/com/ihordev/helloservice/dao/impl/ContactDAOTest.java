@@ -15,28 +15,27 @@ import com.ihordev.helloservice.web.ResultsSizeException;
 public class ContactDAOTest extends AbstractDAOTest
 {
 
-	@Autowired
-	private ContactDAO contactDAO;
-	
-	@Override
-	protected IDataSet getDataSet() throws Exception
-	{
-		return FlatXmlDataSetHelper.getDataSet("testdata/contactdaotest/data-source.xml", "testdata/contactdaotest/dataset.dtd");
-	}
-	
-	
-	@Test
-	public void shouldReturnFilteredContacts() throws Exception
-	{
-		List<Contact> contacts = contactDAO.findContactsUsingFilter("^.*[aei].*$");
-		
-		assertEquals(2, contacts.size());
-	}
+    @Autowired
+    private ContactDAO contactDAO;
 
-	
-	@Test(expected = ResultsSizeException.class)
-	public void shouldThrowExceptionIfThereAreTooManyResults() throws Exception
-	{
-		contactDAO.findContactsUsingFilter("^A.*$");
-	}
+    @Override
+    protected IDataSet getDataSet() throws Exception
+    {
+        return FlatXmlDataSetHelper.getDataSet("testdata/contactdaotest/data-source.xml",
+                                               "testdata/contactdaotest/dataset.dtd");
+    }
+
+    @Test
+    public void shouldReturnFilteredContacts() throws Exception
+    {
+        List<Contact> contacts = contactDAO.findContactsUsingFilter("^.*[aei].*$");
+
+        assertEquals(2, contacts.size());
+    }
+
+    @Test(expected = ResultsSizeException.class)
+    public void shouldThrowExceptionIfThereAreTooManyResults() throws Exception
+    {
+        contactDAO.findContactsUsingFilter("^A.*$");
+    }
 }

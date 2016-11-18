@@ -14,14 +14,14 @@ import com.ihordev.helloservice.service.ContactService;
 public class ContactServiceImpl implements ContactService
 {
 
-	@Autowired
-	private ContactDAO contactDAO;
+    @Autowired
+    private ContactDAO contactDAO;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Contact> findContactsUsingFilter(String nameFilter)
-	{
-		return contactDAO.findContactsUsingFilter(nameFilter);
-	}
-	
+    @Override
+    @Transactional(readOnly = true)
+    public List<Contact> findContactsUsingFilter(String nameFilter)
+    {
+        return contactDAO.findContactsUsingFilter(nameFilter);
+    }
+
 }

@@ -21,56 +21,56 @@ import com.ihordev.helloservice.dao.GenericDAO;
 public abstract class GenericDAOImpl<E, ID extends Serializable> implements GenericDAO<E, ID>
 {
 
-	@PersistenceContext
-	private EntityManager entityManager;
-	private Class<E> entityClass;
+    @PersistenceContext
+    private EntityManager entityManager;
+    private Class<E> entityClass;
 
-	public GenericDAOImpl(Class<E> entityClass)
-	{
-		this.entityClass = entityClass;
-	}
+    public GenericDAOImpl(Class<E> entityClass)
+    {
+        this.entityClass = entityClass;
+    }
 
-	protected EntityManager getEntityManager()
-	{
-		return entityManager;
-	}
+    protected EntityManager getEntityManager()
+    {
+        return entityManager;
+    }
 
-	@Override
-	public void persist(E entity)
-	{
-		getEntityManager().persist(entity);
-	}
+    @Override
+    public void persist(E entity)
+    {
+        getEntityManager().persist(entity);
+    }
 
-	@Override
-	public E merge(E entity)
-	{
-		return getEntityManager().merge(entity);
-	}
+    @Override
+    public E merge(E entity)
+    {
+        return getEntityManager().merge(entity);
+    }
 
-	@Override
-	public void remove(E entity)
-	{
-		getEntityManager().remove(entity);
-	}
+    @Override
+    public void remove(E entity)
+    {
+        getEntityManager().remove(entity);
+    }
 
-	@Override
-	public E findById(ID id)
-	{
-		return getEntityManager().find(entityClass, id);
-	}
+    @Override
+    public E findById(ID id)
+    {
+        return getEntityManager().find(entityClass, id);
+    }
 
-	@Override
-	public E findReferenceById(ID id)
-	{
-		return getEntityManager().getReference(entityClass, id);
-	}
+    @Override
+    public E findReferenceById(ID id)
+    {
+        return getEntityManager().getReference(entityClass, id);
+    }
 
-	@Override
-	public List<E> findAll()
-	{
-		CriteriaQuery<E> q = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
-		q.select(q.from(entityClass));
-		return getEntityManager().createQuery(q).getResultList();
-	}
+    @Override
+    public List<E> findAll()
+    {
+        CriteriaQuery<E> q = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
+        q.select(q.from(entityClass));
+        return getEntityManager().createQuery(q).getResultList();
+    }
 
 }

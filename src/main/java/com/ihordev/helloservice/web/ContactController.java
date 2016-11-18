@@ -19,24 +19,25 @@ import com.ihordev.helloservice.service.ContactService;
 @RequestMapping("/hello/contacts")
 public class ContactController
 {
-	private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
-	
-	@Autowired
-	private ContactService contactService;
-	
-	
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public List<Contact> contacts(@RequestParam(value = "nameFilter") final String nameFilter)
-	{			
-		logger.debug("nameFilter param: " + nameFilter);
-		
-		try {
-			Pattern.compile(nameFilter);
-		} catch (PatternSyntaxException e) {
-			throw new InvalidRequestParameterException(nameFilter);
-		}
-		
-		return contactService.findContactsUsingFilter(nameFilter);
-	}    
+    private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
+
+    @Autowired
+    private ContactService contactService;
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public List<Contact> contacts(@RequestParam(value = "nameFilter") final String nameFilter)
+    {
+        logger.debug("nameFilter param: " + nameFilter);
+
+        try
+        {
+            Pattern.compile(nameFilter);
+        } catch (PatternSyntaxException e)
+        {
+            throw new InvalidRequestParameterException(nameFilter);
+        }
+
+        return contactService.findContactsUsingFilter(nameFilter);
+    }
 
 }

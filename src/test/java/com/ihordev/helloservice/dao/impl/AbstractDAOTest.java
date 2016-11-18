@@ -14,37 +14,37 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ihordev.helloservice.config.TestRootConfig;
+import com.ihordev.helloservice.config.TestDataConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestRootConfig.class)
-@TestPropertySource({"classpath:properties/test-dbconfig.properties", 
-					 "classpath:properties/test-datalayer-config.properties"})
+@ContextConfiguration(classes = TestDataConfig.class)
+@TestPropertySource({"classpath:properties/test-dbconfig.properties",
+                     "classpath:properties/test-datalayer-config.properties" })
 @ActiveProfiles("db-test")
 public abstract class AbstractDAOTest
 {
-	@Autowired
-	private DataSource dataSource;
-	
-	private IDatabaseConnection dbConn;
-	
-	public IDatabaseConnection getConnection()
-	{
-		return dbConn;
-	}
+    @Autowired
+    private DataSource dataSource;
 
-	@Before
-	public void setUp() throws Exception
-	{
-		dbConn = new DatabaseDataSourceConnection(dataSource, "PUBLIC");
+    private IDatabaseConnection dbConn;
+
+    public IDatabaseConnection getConnection()
+    {
+        return dbConn;
+    }
+
+    @Before
+    public void setUp() throws Exception
+    {
+        dbConn = new DatabaseDataSourceConnection(dataSource, "PUBLIC");
         DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
-	}
-	
-	protected abstract IDataSet getDataSet() throws Exception;
+    }
 
-	protected IDataSet getCurrentStateDataSet() throws Exception
-	{
-		return getConnection().createDataSet();
-	}
-	
+    protected abstract IDataSet getDataSet() throws Exception;
+
+    protected IDataSet getCurrentStateDataSet() throws Exception
+    {
+        return getConnection().createDataSet();
+    }
+
 }

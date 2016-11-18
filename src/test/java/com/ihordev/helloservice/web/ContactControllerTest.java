@@ -38,71 +38,69 @@ import com.ihordev.helloservice.service.ContactService;
 @ActiveProfiles("web-test")
 public class ContactControllerTest
 {
-	
-	private MockMvc mockMvc;
-	
-	@Autowired
-	private ContactService mockContactService;
-	
-	@Autowired
-	private WebApplicationContext webApplicationContext;
-	
-	
-	@Before
-	public void setUp()
-	{
-		Mockito.reset(mockContactService);
-		
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-	}
-	
-	@Test
-	public void shouldReturnContactsThatFilteredByNameFilter() throws Exception
-	{
-		Contact contact1 = new Contact();
-		contact1.setId(1L);
-		contact1.setName("Contact one");
-		
-		Contact contact2 = new Contact();
-		contact2.setId(2L);
-		contact2.setName("Contact two");
-		
-		Contact contact3 = new Contact();
-		contact3.setId(3L);
-		contact3.setName("A contact three");
-		
-		String nameFilter = "^A.*$";
-		
-		when(mockContactService.findContactsUsingFilter(eq(nameFilter))).thenReturn(Arrays.asList(contact1, contact2));
-		
-		mockMvc.perform(get("/hello/contacts")
-				.param("nameFilter", nameFilter))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-			.andExpect(jsonPath("$", hasSize(2)))
-			.andExpect(jsonPath("$[0].id", equalTo(1)))
-			.andExpect(jsonPath("$[0].name", equalTo("Contact one")))
-			.andExpect(jsonPath("$[1].id", equalTo(2)))
-			.andExpect(jsonPath("$[1].name", equalTo("Contact two")));
-		
-		verify(mockContactService, atLeastOnce()).findContactsUsingFilter(eq(nameFilter));
-	}
-	
-	@Test
-	public void shouldReturnBadRequestResponse_missingParameter() throws Exception 
-	{
-		mockMvc.perform(get("/hello/contacts"))
-			.andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
-	}
-	
-	@Test
-	public void shouldReturnBadRequestResponse_invalidParameter() throws Exception 
-	{
-		String nameFilter = "[";
 
-		mockMvc.perform(get("/hello/contacts")
-				.param("nameFilter", nameFilter))
-		.andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
-	}
-	
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ContactService mockContactService;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Before
+    public void setUp()
+    {
+        Mockito.reset(mockContactService);
+
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
+    @Test
+    public void shouldReturnContactsThatFilteredByNameFilter() throws Exception
+    {
+        Contact contact1 = new Contact();
+        contact1.setId(1L);
+        contact1.setName("Contact one");
+
+        Contact contact2 = new Contact();
+        contact2.setId(2L);
+        contact2.setName("Contact two");
+
+        Contact contact3 = new Contact();
+        contact3.setId(3L);
+        contact3.setName("A contact three");
+
+        String nameFilter = "^A.*$";
+
+        when(mockContactService.findContactsUsingFilter(eq(nameFilter))).thenReturn(Arrays.asList(contact1, contact2));
+
+        mockMvc.perform(get("/hello/contacts")
+                .param("nameFilter", nameFilter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(2)))
+            .andExpect(jsonPath("$[0].id", equalTo(1)))
+            .andExpect(jsonPath("$[0].name", equalTo("Contact one")))
+            .andExpect(jsonPath("$[1].id", equalTo(2)))
+            .andExpect(jsonPath("$[1].name", equalTo("Contact two")));
+
+        verify(mockContactService, atLeastOnce()).findContactsUsingFilter(eq(nameFilter));
+    }
+
+    @Test
+    public void shouldReturnBadRequestResponse_missingParameter() throws Exception
+    {
+        mockMvc.perform(get("/hello/contacts")).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @Test
+    public void shouldReturnBadRequestResponse_invalidParameter() throws Exception
+    {
+        String nameFilter = "[";
+
+        mockMvc.perform(get("/hello/contacts")
+                .param("nameFilter", nameFilter))
+            .andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+    }
+
 }
