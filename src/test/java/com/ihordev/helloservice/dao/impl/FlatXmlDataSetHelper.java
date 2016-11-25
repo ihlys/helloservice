@@ -9,11 +9,8 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * 
  * This is a helper class for loading test data XML resources in database tests.
- *
  */
-
 final class FlatXmlDataSetHelper
 {
 
@@ -23,15 +20,16 @@ final class FlatXmlDataSetHelper
     }
 
     /**
-     * Loads data set from XML resource with corresponding metadata from DTD.
+     * Loads data set from XML resource with corresponding meta data from DTD.
      * 
-     * @param dataSetResourcePath
-     *            path to XML resource that contains test data.
-     * @param dataSetDTDResourcePath
-     *            path to DTD file that defines data structure.
-     * @return dataset for {@link org.dbunit.operation.DatabaseOperation} for testing.
-     * @throws DataSetException
-     * @throws IOException
+     * @param   dataSetResourcePath     path to XML resource that contains test data.
+     * @param   dataSetDTDResourcePath  path to DTD file that defines data structure.
+     * 
+     * @return                          dataset for {@link org.dbunit.operation.DatabaseOperation} 
+     *                                  for testing.
+     * 
+     * @throws  DataSetException
+     * @throws  IOException
      */
     public static IDataSet getDataSet(String dataSetResourcePath, String dataSetDTDResourcePath)
             throws DataSetException, IOException

@@ -1,11 +1,10 @@
 package com.ihordev.helloservice.dao.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import org.hibernate.SessionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -17,14 +16,14 @@ import com.ihordev.helloservice.config.TestDataConfig;
 @ContextConfiguration(classes = TestDataConfig.class)
 @TestPropertySource("classpath:properties/test-dbconfig.properties")
 @ActiveProfiles("db-test")
-public class EntityManagerTest
+public class SessionFactoryTest
 {
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Test
-    public void shouldProvideEntityManager()
+    public void shouldLoadSessionFactory()
     {
-        Assert.assertNotNull(entityManager);
+        Assert.assertNotNull(sessionFactory);
     }
 }

@@ -1,13 +1,12 @@
 package com.ihordev.helloservice.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ihordev.helloservice.dao.ContactDAO;
 import com.ihordev.helloservice.domain.Contact;
+import com.ihordev.helloservice.model.ResourcePage;
 import com.ihordev.helloservice.service.ContactService;
 
 @Service
@@ -19,9 +18,9 @@ public class ContactServiceImpl implements ContactService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Contact> findContactsUsingFilter(String nameFilter)
+    public ResourcePage<Contact> findContactsUsingFilterPaginated(String nameFilter, ResourcePage<Contact> resourcePage)
     {
-        return contactDAO.findContactsUsingFilter(nameFilter);
+        return contactDAO.findContactsUsingFilterPaginated(nameFilter, resourcePage);
     }
 
 }

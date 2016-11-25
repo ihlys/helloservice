@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 
- * Generic data access object (DAO) interface.
- * 
+ * This is a generic Data access object (DAO) interface.
  */
 public interface GenericDAO<E, ID extends Serializable>
 {

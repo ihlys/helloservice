@@ -1,25 +1,24 @@
 package com.ihordev.helloservice.dao;
 
-import java.util.List;
-
 import com.ihordev.helloservice.domain.Contact;
+import com.ihordev.helloservice.model.ResourcePage;
 
 /**
- * 
- * Data access object (DAO) interface for {@link com.ihordev.helloservice.domain.Contact} entities.
- *
+ * This is a Data access object (DAO) interface for {@link Contact} entities.
  */
 public interface ContactDAO extends GenericDAO<Contact, Long>
 {
 
     /**
-     * Retrieves {@link com.ihordev.helloservice.domain.Contact} 
-     * list using regex expression filter.
+     * Retrieves a {@link ResourcePage} collection of {@link Contact} objects 
+     * using regular expression filter. Resource page passed as parameter holds
+     * paging information and returned page is a new instance with result data. 
      * 
-     * @param nameFilter
-     *            a string containing regex expression.
-     * @return a list of contacts
+     * @param   nameFilter      a string containing regular expression.
+     * @param   resourcePage    a page that describes how many results must be retrieved, from which 
+     *                          element starting, sort order and sort attribute.
+     * @return                  a new instance that holds all information from passed parameter page and result data.
      */
-    List<Contact> findContactsUsingFilter(String nameFilter);
+    ResourcePage<Contact> findContactsUsingFilterPaginated(String nameFilter, ResourcePage<Contact> resourcePage);
 
 }

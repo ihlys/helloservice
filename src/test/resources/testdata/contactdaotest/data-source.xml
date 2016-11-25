@@ -2,10 +2,15 @@
 <!DOCTYPE dataset SYSTEM "dataset.dtd">
 <dataset>
 
-	<Contacts id="1" name="Cont_ct on_" />
-	<Contacts id="2" name="Cont_ct two" />
-	<Contacts id="3" name="Contact three" />
-	<Contacts id="4" name="Contact four" />
-	<Contacts id="5" name="A Contact five" />
+	<Contacts id="1"  name="Cont_ct on_" />
+	<Contacts id="2"  name="Cont_ct two" />
+	<Contacts id="3"  name="Contact three" />
+	<Contacts id="4"  name="Contact four" />
+	<Contacts id="5"  name="A Contact five" />
+	<Contacts id="6"  name="Contact six" />
+	<Contacts id="7"  name="Contact seven" />
+	<Contacts id="8"  name="Contact eight" />
+	<Contacts id="9"  name="Contact nine" />
+	<Contacts id="10" name="Contact ten" />
 
 </dataset>

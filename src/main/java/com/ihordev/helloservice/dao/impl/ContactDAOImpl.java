@@ -12,19 +12,20 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.StatelessSession;
 import org.hibernate.jdbc.Work;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.ihordev.helloservice.dao.ContactDAO;
 import com.ihordev.helloservice.domain.Contact;
-import com.ihordev.helloservice.web.ResultsSizeException;
+import com.ihordev.helloservice.model.ResourcePage;
 
 @Repository
 public class ContactDAOImpl extends GenericDAOImpl<Contact, Long> implements ContactDAO
 {
-
-    @Value("${ContactDAO.maxQueryResults}")
-    private int maxQueryResults;
+    private static final Logger logger = LoggerFactory.getLogger(ContactDAOImpl.class);
+    
 
     @Value("${ContactDAO.fetchSize}")
     private int fetchSize;
@@ -34,11 +35,17 @@ public class ContactDAOImpl extends GenericDAOImpl<Contact, Long> implements Con
         super(Contact.class);
     }
 
+    
     @Override
-    public List<Contact> findContactsUsingFilter(final String nameFilter)
+    public ResourcePage<Contact> findContactsUsingFilterPaginated(final String nameFilter, ResourcePage<Contact> resourcePage)
     {
+        logger.debug("nameFilter param: " + nameFilter);
+        
         final List<Contact> filteredContacts = new ArrayList<>();
-        final Session session = getEntityManager().unwrap(Session.class);
+        final Session session = getCurrentSession();
+        
+        final int[] totalResults = new int[1];
+        final ResourcePage<Contact> resultPage = new ResourcePage<>(resourcePage);
 
         session.doWork(new Work() {
 
@@ -47,21 +54,30 @@ public class ContactDAOImpl extends GenericDAOImpl<Contact, Long> implements Con
             {
                 StatelessSession statelessSession = session.getSessionFactory().openStatelessSession(connection);
 
-                ScrollableResults contacts = statelessSession.createQuery("from Contact", Contact.class)
+                String defaultOrderBy = "name";
+                String defaultOrder = "ASC";
+                String orderBy = (resultPage.getOrderBy() != null) ? resultPage.getOrderBy() : defaultOrderBy;
+                String order = (resultPage.getOrder() != null) ? resultPage.getOrder().toString() : defaultOrder;
+                
+                String query = "from Contact contact order by contact." + orderBy + " " + order;
+                
+                ScrollableResults contacts = statelessSession.createQuery(query, Contact.class)
                         .setReadOnly(true).setFetchSize(fetchSize).scroll(ScrollMode.FORWARD_ONLY);
 
                 Pattern p = Pattern.compile(nameFilter);
-
+                int skippedResults = 0;
+                
                 while (contacts.next())
                 {
                     Contact contact = (Contact) contacts.get(0);
                     Matcher m = p.matcher(contact.getName());
                     if (m.matches() == false)
                     {
-                        filteredContacts.add(contact);
-                        if (filteredContacts.size() > maxQueryResults)
+                        totalResults[0]++;
+                        if (skippedResults++ >= (resultPage.getPage() - 1) * resultPage.getLimit() 
+                                && filteredContacts.size() < resultPage.getLimit())
                         {
-                            throw new ResultsSizeException(filteredContacts.size());
+                            filteredContacts.add(contact);
                         }
                     }
                 }
@@ -71,7 +87,10 @@ public class ContactDAOImpl extends GenericDAOImpl<Contact, Long> implements Con
 
         });
 
-        return filteredContacts;
+        resultPage.setRecords(filteredContacts);
+        resultPage.setTotalRecords(totalResults[0]);
+        
+        return resultPage;
     }
 
 }
